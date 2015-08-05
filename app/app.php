@@ -23,7 +23,7 @@
  * THE SOFTWARE.
  */
 
-define('ROOT_DIR', '/Users/vyacheslav/NetBeansProjects/fsrapi/fs');
+define('ROOT_DIR', __DIR__ . '/../fs');
 
 require_once __DIR__ . '/bootstrap.php';
 
@@ -33,7 +33,7 @@ use VBessonov\FSRAPI\Controllers\MetadataController;
 
 $app = new Application();
 
-$app['debug'] = true;
+$app['debug'] = false;
 $app->mount('/files', new FilesController());
 $app->mount('/metadata', new MetadataController());
 
