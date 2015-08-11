@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,17 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Utils;
 
-return $autoloader;
+/**
+ * Description of DateTimeUtil
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class DateTimeUtils
+{
+    public static function toString($time)
+    {
+        return strftime('%a, %d %b %Y %H:%M:%S %z', $time);
+    }
+}

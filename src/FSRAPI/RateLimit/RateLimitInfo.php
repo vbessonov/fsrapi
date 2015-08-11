@@ -23,12 +23,21 @@
  * THE SOFTWARE.
  */
 
+namespace VBessonov\FSRAPI\RateLimit;
+
 /**
- * Description of File
+ * Description of RateLimitInfo
  *
  * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
  */
-class File
+class RateLimitInfo
 {
-    //put your code here
+    public $maxLimit;
+    public $currentAmount;
+
+    public function __construct($maxLimit, $currentLimit)
+    {
+        $this->maxLimit = $maxLimit;
+        $this->currentAmount = $currentLimit;
+    }
 }

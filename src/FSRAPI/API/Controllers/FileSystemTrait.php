@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,40 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\API\Controllers;
 
-return $autoloader;
+use DateTime;
+use Silex\Application;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * Description of FileSystemTrait
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+trait FileSystemTrait
+{
+    public function getLastWriteTime(Application $app, $path)
+    {
+        $timestamp = $app['fsrapi.cache']->getTimestamp($path);
+        $lastWriteTime = new DateTime();
+
+        $lastWriteTime->setTimestamp($timestamp);
+
+        return $lastWriteTime;
+    }
+
+    public function hasCachedResponse(Request $request, DateTime $lastWriteTime)
+    {
+        $response = new Response();
+
+        $response->setLastModified($lastWriteTime);
+
+        if ($response->isNotModified($request)) {
+            return $response;
+        }
+
+        return false;
+    }
+}

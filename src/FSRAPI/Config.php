@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,17 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI;
 
-return $autoloader;
+/**
+ * Description of Config
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class Config
+{
+    public static function getRootDir()
+    {
+        return __DIR__ . '/../../files/fs';
+    }
+}

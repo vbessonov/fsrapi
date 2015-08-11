@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,39 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Tests\API\Controllers;
 
-return $autoloader;
+use VBessonov\FSRAPI\Tests\BaseTest;
+
+//use \SplFileInfo;
+
+/**
+ * Description of MetadataControllerTest
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class MetadataControllerTest extends BaseTest
+{
+    public function testGetMetadata()
+    {
+//        $fileName = '/Users/vyacheslav/NetBeansProjects/fsrapi/tests/fs/newfile';
+//
+//        file_put_contents($fileName, '');
+//
+//        $fileInfo = new SplFileInfo($fileName);
+//        $fileInfo->getMTime();
+//
+//        $client = $this->createClient();
+//        $client->request('GET', '/metadata/');
+//        $content = $client->getResponse()->getContent();
+//        $obj = json_decode($content);
+//
+//        echo "Content: '{$content}'";
+//
+//        $this->assertEquals(filesize($fileName), $obj->size);
+//
+//
+//
+//        $this->assertTrue($client->getResponse()->isOk());
+    }
+}

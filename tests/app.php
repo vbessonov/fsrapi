@@ -23,4 +23,5 @@
  * THE SOFTWARE.
  */
 
+require_once __DIR__ . '/bootstrap.php';
 return require_once __DIR__ . '/../app/app.php';

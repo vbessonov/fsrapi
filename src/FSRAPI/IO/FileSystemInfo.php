@@ -23,52 +23,46 @@
  * THE SOFTWARE.
  */
 
-namespace VBessonov\FSRAPI\Utils;
+namespace VBessonov\FSRAPI\IO;
 
 /**
- * Description of Path
+ * Description of FileSystemInfo
  *
  * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
  */
-class Path
+abstract class FileSystemInfo
 {
-    public static function getRealPath($path)
+    protected $path;
+    
+    protected function __construct($path)
     {
-        return realpath(ROOT_DIR . DIRECTORY_SEPARATOR . $path);
+        $this->path = $path;
     }
 
-    public static function getVirtualPath($path)
+    public abstract function getSize();
+
+    public function getName()
     {
-        $virtualPath = str_replace(ROOT_DIR, '', $path);
-        $dirname = dirname($virtualPath);
-
-        if (empty($dirname) || $dirname === '.') {
-            $virtualPath = '/' . $virtualPath;
-        }
-
-        return $virtualPath;
+        return basename($this->path);
     }
 
-    public static function combine($path1, $path2)
+    public function getFullName()
     {
-        if (strlen($path2) == 0) {
-            return $path1;
-        }
-        if (strlen($path1) == 0) {
-            return $path2;
-        }
-        
-        $completePath = $path1;
+        return $this->path;
+    }
 
-        if ($path1[strlen($path1) - 1] !== DIRECTORY_SEPARATOR) {
-            $completePath .= DIRECTORY_SEPARATOR;
-        }
-        if ($path2[strlen($path2) - 1] !== DIRECTORY_SEPARATOR) {
-            $completePath .= $path2;
-        } else {
-            $completePath .= $path2[strlen($path2) - 1];
-        }
+    public function getLastWriteTime()
+    {
+        return filemtime($this->path);
+    }
 
-        return $completePath;
+    public function getLastAccessTime()
+    {
+        return fileatime($this->path);
+    }
+
+    public function exists()
+    {
+        return Path::exists($this->path);
     }
 }

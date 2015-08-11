@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,39 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Cache;
 
-return $autoloader;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+
+/**
+ * Description of CacheServiceProvider
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class FileSystemCacheServiceProvider implements ServiceProviderInterface
+{
+    public function boot(Application $app)
+    {
+        
+    }
+
+    public function register(Application $app)
+    {
+        $app['fsrapi.cache'] = $app->share(
+            function () use ($app) {
+                try {
+                    $cache = $app['caches']['redis'];
+                } catch (\Exception $ex) {
+                    $app['monolog']->addError("Redis is not available: {$ex->getMessage()})");
+                }
+
+                if (empty($cache)) {
+                    $cache = $app['caches']['file'];
+                }
+
+                return new FileSystemCache($cache);
+            }
+        );
+    }
+}

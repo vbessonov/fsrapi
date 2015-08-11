@@ -1,2 +1,6 @@
 vendor/*
 nbproject/*
+files/fs/*
+files/cache/fs_cache/*
+files/cache/http_cache/*
+logs/*

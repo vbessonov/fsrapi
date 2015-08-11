@@ -23,37 +23,14 @@
  * THE SOFTWARE.
  */
 
-namespace VBessonov\FSRAPI\Tests;
-
-//use \SplFileInfo;
+//namespace
 
 /**
- * Description of MetadataControllerTest
+ * Description of RateLimitProviderFactory
  *
  * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
  */
-class MetadataControllerTest extends BaseTest
+class RateLimitProviderFactory
 {
-    public function testGetMetadata()
-    {
-//        $fileName = '/Users/vyacheslav/NetBeansProjects/fsrapi/tests/fs/newfile';
-//
-//        file_put_contents($fileName, '');
-//
-//        $fileInfo = new SplFileInfo($fileName);
-//        $fileInfo->getMTime();
-//
-//        $client = $this->createClient();
-//        $client->request('GET', '/metadata/');
-//        $content = $client->getResponse()->getContent();
-//        $obj = json_decode($content);
-//
-//        echo "Content: '{$content}'";
-//
-//        $this->assertEquals(filesize($fileName), $obj->size);
-//
-//
-//
-//        $this->assertTrue($client->getResponse()->isOk());
-    }
+    //put your code here
 }

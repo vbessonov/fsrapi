@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,32 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\IO;
 
-return $autoloader;
+/**
+ * Description of FileInfo
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class FileInfo extends FileSystemInfo
+{
+    public function __construct($path)
+    {
+        parent::__construct($path);
+    }
+
+    public function getSize()
+    {
+        return filesize($this->path);
+    }
+
+    public function getDirectory()
+    {
+        return new DirectoryInfo($this->getDirectoryName());
+    }
+
+    public function getDirectoryName()
+    {
+        return dirname($this->path);
+    }
+}

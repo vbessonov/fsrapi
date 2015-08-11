@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,16 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\RateLimit;
 
-return $autoloader;
+/**
+ * Description of RateLimitStorageInterface
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+interface RateLimitStorageInterface
+{
+    public function get($id);
+    
+    public function set($id, $amount);
+}

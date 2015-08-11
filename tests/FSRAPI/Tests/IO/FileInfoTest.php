@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,30 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Tests\IO;
 
-return $autoloader;
+use VBessonov\FSRAPI\IO\FileInfo;
+use VBessonov\FSRAPI\IO\Path;
+
+/**
+ * Description of FileInfoTest
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class FileInfoTest extends FileSystemInfoTest
+{
+    protected function getTestPath()
+    {
+        return Path::combine(self::TEST_DIRECTORY, 'newfile');
+    }
+
+    protected function getInfo()
+    {
+        return new FileInfo($this->getTestPath());
+    }
+
+    protected function getSpecificInfo($path)
+    {
+        return new FileInfo($path);
+    }
+}

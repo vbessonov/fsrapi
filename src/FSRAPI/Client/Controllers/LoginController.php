@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,37 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Client\Controllers;
 
-return $autoloader;
+use Silex\Application;
+use Silex\ControllerProviderInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Description of LoginController
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class LoginController implements ControllerProviderInterface
+{
+    public function connect(Application $app)
+    {
+        $factory = $app['controllers_factory'];
+        $factory->get(
+            '/',
+            'VBessonov\FSRAPI\Client\Controllers\LoginController::index'
+        );
+
+        return $factory;
+    }
+
+    public function index(Application $app, Request $request)
+    {
+        return $app['twig']->render(
+            'login.twig',
+            array(
+                'error' => $app['security.last_error']($request),
+                'last_username' => $app['session']->get('_security.last_username'),
+            ));
+    }
+}

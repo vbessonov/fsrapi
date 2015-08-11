@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,32 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\RateLimit\Storage;
 
-return $autoloader;
+use Doctrine\Common\Cache\Cache;
+use VBessonov\FSRAPI\RateLimit\RateLimitStorageInterface;
+
+/**
+ * Description of DoctrineRateLimitStorage
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class DoctrineRateLimitStorage implements RateLimitStorageInterface
+{
+    private $cache;
+
+    public function __construct(Cache $cache)
+    {
+        $this->cache = $cache;
+    }
+    
+    public function get($id)
+    {
+        return $this->cache->fetch($id);
+    }
+
+    public function set($id, $amount)
+    {
+        $this->cache->save($id, $amount);
+    }
+}

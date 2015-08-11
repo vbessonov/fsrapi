@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,30 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\Security;
 
-return $autoloader;
+use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
+
+/**
+ * Description of WsseUserToken
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+class WsseUserToken extends AbstractToken
+{
+    public $created;
+    public $digest;
+    public $nonce;
+    
+    public function __construct(array $roles = array())
+    {
+        parent::__construct($roles);
+
+        $this->setAuthenticated(count($roles) > 0);
+    }
+
+    public function getCredentials()
+    {
+        return '';
+    }
+}

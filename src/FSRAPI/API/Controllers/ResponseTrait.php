@@ -1,5 +1,5 @@
 <?php
-/* 
+/*
  * The MIT License
  *
  * Copyright 2015 Vyacheslav Bessonov <v.bessonov@hotmail.com>.
@@ -23,7 +23,22 @@
  * THE SOFTWARE.
  */
 
-$autoloader = require_once __DIR__ . '/../app/bootstrap.php';
-$autoloader->addPsr4('VBessonov\\', __DIR__);
+namespace VBessonov\FSRAPI\API\Controllers;
 
-return $autoloader;
+use Symfony\Component\HttpFoundation\Response;
+
+/**
+ * Description of MessageTrait
+ *
+ * @author Vyacheslav Bessonov <v.bessonov@hotmail.com>
+ */
+trait ResponseTrait
+{
+    public function createResponse($statusCode = Response::HTTP_OK, $statusText = null)
+    {
+        $response = new Response();
+        $response->setStatusCode($statusCode, $statusText);
+
+        return $response;
+    }
+}

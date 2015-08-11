@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>File System REST API Client</title>
+    </head>
+    <body>
+        <form action="{{ path('user_logout') }}">
+            <input type="submit" value="Log out">
+        </form>
+        {% if directory is defined %}
+            <form enctype="multipart/form-data" action="{{ uri }}" method="POST">
+                <table>
+                    <tr>
+                        <td><input type="text" name="directoryName"></td>
+                        <td><input type="submit" value="Create Directory" name="createDirectory"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="file" name="userfile"></td>
+                        <td><input type="submit" value="Create File" name="createFile"></td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>Name</th>
+                        <th>Size</th>
+                        <th>Last Access Time</th>
+                        <th>Last Write Time</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        {% if directory.path != '/' %}
+                            {% set url = "/user#{directory.path}/.." %}
+                            {% if app.debug %}
+                                {% set url = url ~ '?XDEBUG_SESSION_START=netbeans-xdebug' %}
+                            {% endif %}
+                            <td><a href="{{ url }}">..</a></td>
+                        {% endif %}
+                    </tr>
+                    {% for item in directory.contents %}
+                        <tr>
+                            {% set url = "/user#{item.path}" %}
+                            {% if app.debug %}
+                                {% set url = url ~ '?XDEBUG_SESSION_START=netbeans-xdebug' %}
+                            {% endif %}
+                            {% if not item.is_dir %}
+                                {% if '?' in url  %}
+                                    {% set url = url ~ '&is_file=true' %}
+                                {% else %}
+                                    {% set url = url ~ '?is_file=true' %}
+                                {% endif %}
+                            {% endif %}
+                            <td><a href="{{ url }}">{{ item.name }}</a></td>
+                            <td>{{ item.size }}</td>
+                            <td>{{ item.last_access_time }}</td>
+                            <td>{{ item.last_write_time }}</td>
+                            <td><input name="{{ "delete_#{item.path}"|replace({'.':'#'}) }}" type="submit" value="Delete"></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </form>
+        {% endif %}
+        {% if response_info is defined %}
+            {% set color = 'black' %}
+            {% if response_info.status_code != 200 %}
+                {% set color = 'red' %}
+            {% endif %}
+            <p style="color:{{ color }}">{{ response_info.method }} "{{ response_info.uri }}": {{ response_info.status_code }} "{{ response_info.status_text }}"</p>
+        {% endif %}
+        {% if cache_info is defined %}
+            <p>X-Symfony-Cache: {{ cache_info }}</p>
+        {% endif %}
+        {% if rate_limit_info is defined %}
+            <p>X-RateLimit-Limit: {{ rate_limit_info.limit }}</p>
+            <p>X-RateLimit-Remaining: {{ rate_limit_info.remaining }}</p>
+        {% endif %}
+    </body>
+</html>
